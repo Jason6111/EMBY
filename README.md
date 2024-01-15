@@ -6,5 +6,8 @@ bash -c "$(curl https://raw.githubusercontent.com/Jason6111/EMBY/main/update_new
 bash -c "$(curl -s https://raw.githubusercontent.com/Jason6111/EMBY/main/aliyun_clear.sh | tail -n +2)" -s 3 -tg
 ```
 ```
-bash -c "$(curl https://raw.githubusercontent.com/Jason6111/EMBY/main/emby.sh)" -s /媒体库目录
+bash -c "$(curl https://raw.githubusercontent.com/Jason6111/EMBY/main/emby.sh)" -s /媒体库目录  /配置目录
+```
+```
+0 20 * * * docker restart xiaoya
 ```
