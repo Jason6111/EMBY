@@ -640,12 +640,12 @@ install_keeper(){
     
     echo "$newsh" > "$XIAOYA_ROOT/aliyun_clear.sh"
     docker rm -f -v xiaoyakeeper >/dev/null 2>&1
-    docker run --name xiaoyakeeper --restart=always --network=host --privileged -v /var/run/docker.sock:/var/run/docker.sock -e TZ="Asia/Shanghai" -d dockerproxy.com/library/alpine:3.18.2 sh -c "if [ -f /mnt/nvme0n1p3/docker/xiaoya/aliyun_clear.sh ];then sh /mnt/nvme0n1p3/docker/xiaoya/aliyun_clear.sh $1;else sleep 60;fi"
+    docker run --name xiaoyakeeper --restart=always --network=host --privileged -v /var/run/docker.sock:/var/run/docker.sock -e TZ="Asia/Shanghai" -d dockerproxy.com/library/alpine:3.18.2 sh -c "if [ -f /etc/xiaoya/aliyun_clear.sh ];then sh /etc/xiaoya/aliyun_clear.sh $1;else sleep 60;fi"
     docker exec xiaoyakeeper touch /docker-entrypoint.sh
-    docker exec xiaoyakeeper mkdir /mnt/nvme0n1p3/docker/xiaoya
-    docker cp $XIAOYA_ROOT/aliyun_clear.sh xiaoyakeeper:/mnt/nvme0n1p3/docker/xiaoya/aliyun_clear.sh
+    docker exec xiaoyakeeper mkdir /etc/xiaoya
+    docker cp $XIAOYA_ROOT/aliyun_clear.sh xiaoyakeeper:/etc/xiaoya/aliyun_clear.sh
     
-   docker exec xiaoyakeeper chmod +x "/mnt/nvme0n1p3/docker/xiaoya/aliyun_clear.sh"
+   docker exec xiaoyakeeper chmod +x "/etc/xiaoya/aliyun_clear.sh"
    rm -f "$XIAOYA_ROOT/aliyun_clear.sh"
    docker restart xiaoyakeeper
    
