@@ -80,8 +80,7 @@ if [ $1 ]; then
 
 	if [ $2 ]; then
         	docker run -it --security-opt seccomp=unconfined --rm --net=host -v $1:/media -v $2:/mnt/nvme0n1p3/docker/xiaoya -e LANG=C.UTF-8  xiaoyaliu/glue:latest /update_all.sh
-                	#echo "http://$docker0:8096" > $2/emby_server.txt
-			echo "http://$docker0:6908" > $2/emby_server.txt
+                	echo "http://$docker0:6908" > $2/emby_server.txt
 			echo e825ed6f7f8f44ffa0563cddaddce14d > $2/infuse_api_key.txt
 			chmod -R 777 $1/*
 	else
@@ -93,30 +92,23 @@ if [ $1 ]; then
 			config_dir=$(docker inspect $docker_name |grep Source |head -n1 |cut -f2 -d:|tr -d '\", ')
         		docker run -it --security-opt seccomp=unconfined --rm --net=host -v $1:/media -v $config_dir:/mnt/nvme0n1p3/docker/xiaoya -e LANG=C.UTF-8  xiaoyaliu/glue:latest /update_all.sh
 		fi	
-                	#echo "http://$docker0:8096" > $config_dir/emby_server.txt
-			echo "http://$docker0:6908" > $config_dir/emby_server.txt
+                	echo "http://$docker0:6908" > $config_dir/emby_server.txt
 			echo e825ed6f7f8f44ffa0563cddaddce14d > $config_dir/infuse_api_key.txt
 			chmod -R 777 $1/*
 	fi
 	
-	if ! grep xiaoya.host /etc/hosts; then
-		echo -e "127.0.0.1\txiaoya.host\n" >> /etc/hosts
-		xiaoya_host="127.0.0.1"
-	else
-		xiaoya_host=$(grep xiaoya.host /etc/hosts |cut -f1 |head -n1)	
-	fi
 	echo "开始安装Emby容器....."
 	#wget -q -O /tmp/Emby.Server.Implementations.dll http://docker.xiaoya.pro/Emby.Server.Implementations.dll
 	case $cpu_arch in
 		"x86_64" | *"amd64"*)
-			docker run -d --name emby -v $1/config:/config -v $1/xiaoya:/media --network=host --add-host="xiaoya.host:$xiaoya_host" --user 0:0 --restart always emby/embyserver:4.8.0.56
+			docker run -d --name emby -v $1/config:/config -v $1/xiaoya:/media --net=host --user 0:0 --restart always emby/embyserver:4.8.0.56
 			#docker cp /tmp/Emby.Server.Implementations.dll emby:/system/
 			#docker exec -i emby chmod 644 /system/Emby.Server.Implementations.dll
 			#docker restart emby
 			echo "一键全家桶全部安装完成"
 			;;
 		"aarch64" | *"arm64"* | *"armv8"* | *"arm/v8"*)
-		        docker run -d --name emby -v $1/config:/config -v $1/xiaoya:/media --network=host --add-host="xiaoya.host:$xiaoya_host" --user 0:0 --restart always emby/embyserver_arm64v8:4.8.0.56
+		        docker run -d --name emby -v $1/config:/config -v $1/xiaoya:/media --net=host  --user 0:0 --restart always emby/embyserver_arm64v8:4.8.0.56
 			#docker cp /tmp/Emby.Server.Implementations.dll emby:/system/
                         #docker exec -i emby chmod 644 /system/Emby.Server.Implementations.dll
                         #docker restart emby
@@ -128,7 +120,7 @@ if [ $1 ]; then
 			;;
 	esac		
 	sleep 5
-	if ! curl -I -s http://$docker0:2345/ | grep -q "302"; then 
+	if ! curl -I -s http://172.17.0.1:2345/ | grep -q "302"; then 
 		dockername=$(docker ps |grep xiaoyaliu/alist |awk '{print $NF}')
 		echo "重启 xiaoya"
 		docker restart $dockername 2>/dev/null
