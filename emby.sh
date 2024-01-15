@@ -31,10 +31,10 @@ if [ $1 ]; then
 			exit 1	
 		fi
 	else
-		if [ -s /mnt/nvme0n1p3/docker/xiaoya/docker_address.txt ]; then
-			docker_addr=$(head -n1 /mnt/nvme0n1p3/docker/xiaoya/docker_address.txt)
+		if [ -s /etc/xiaoya/docker_address.txt ]; then
+			docker_addr=$(head -n1 /etc/xiaoya/docker_address.txt)
 		else
-                        echo "请先配置 /mnt/nvme0n1p3/docker/xiaoya/docker_address.txt 后重试"
+                        echo "请先配置 /etc/xiaoya/docker_address.txt 后重试"
                         exit 1
                 fi
 	fi
@@ -79,18 +79,18 @@ if [ $1 ]; then
 	fi
 
 	if [ $2 ]; then
-        	docker run -it --security-opt seccomp=unconfined --rm --net=host -v $1:/media -v $2:/mnt/nvme0n1p3/docker/xiaoya -e LANG=C.UTF-8  xiaoyaliu/glue:latest /update_all.sh
+        	docker run -it --security-opt seccomp=unconfined --rm --net=host -v $1:/media -v $2:/etc/xiaoya -e LANG=C.UTF-8  xiaoyaliu/glue:latest /update_all.sh
                 	echo "http://$docker0:6908" > $2/emby_server.txt
 			echo e825ed6f7f8f44ffa0563cddaddce14d > $2/infuse_api_key.txt
 			chmod -R 777 $1/*
 	else
-		if [ -s /mnt/nvme0n1p3/docker/xiaoya/docker_address.txt ]; then
-			docker run -it --security-opt seccomp=unconfined --rm --net=host -v $1:/media -v /mnt/nvme0n1p3/docker/xiaoya:/mnt/nvme0n1p3/docker/xiaoya -e LANG=C.UTF-8  xiaoyaliu/glue:latest /update_all.sh
-			config_dir="/mnt/nvme0n1p3/docker/xiaoya"
+		if [ -s /etc/xiaoya/docker_address.txt ]; then
+			docker run -it --security-opt seccomp=unconfined --rm --net=host -v $1:/media -v /etc/xiaoya:/etc/xiaoya -e LANG=C.UTF-8  xiaoyaliu/glue:latest /update_all.sh
+			config_dir="/etc/xiaoya"
 		else	
 			docker_name=$(docker ps |grep xiaoya|awk '{print $NF}')
 			config_dir=$(docker inspect $docker_name |grep Source |head -n1 |cut -f2 -d:|tr -d '\", ')
-        		docker run -it --security-opt seccomp=unconfined --rm --net=host -v $1:/media -v $config_dir:/mnt/nvme0n1p3/docker/xiaoya -e LANG=C.UTF-8  xiaoyaliu/glue:latest /update_all.sh
+        		docker run -it --security-opt seccomp=unconfined --rm --net=host -v $1:/media -v $config_dir:/etc/xiaoya -e LANG=C.UTF-8  xiaoyaliu/glue:latest /update_all.sh
 		fi	
                 	echo "http://$docker0:6908" > $config_dir/emby_server.txt
 			echo e825ed6f7f8f44ffa0563cddaddce14d > $config_dir/infuse_api_key.txt
