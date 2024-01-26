@@ -1,7 +1,10 @@
 ## 请勿擅自使用  
 地址1(32位token获取)：https://aliyuntoken.vercel.app/  
 地址2(280位token获取)：https://alist.nn.ci/tool/aliyundrive/request  
-地址3【重点】：转存目录的folder id
+地址3【重点】：转存目录的folder id  
+```
+0 5 * * * docker restart xiaoya
+```
 ```
 bash -c "$(curl https://raw.githubusercontent.com/Jason6111/EMBY/main/update_new.sh)"
 ```
