@@ -57,4 +57,8 @@ bash -c "$(curl http://docker.xiaoya.pro/resilio.sh)" -s /媒体库目录  /你�
 自己设置crontab定时任务，下面是每天早上6点更新emby config一次
 0 6 * * * bash -c "$(curl http://docker.xiaoya.pro/sync_emby_config.sh)" -s /媒体库目录
 或者是每隔3天早上6点更新emby config一次
-0 6 */3 * * bash -c "$(curl http://docker.xiaoya.pro/sync_emby_config.sh)" -s /媒体库目录
+0 6 */3 * * bash -c "$(curl http://docker.xiaoya.pro/sync_emby_config.sh)" -s /媒体库目录  
+猫影视配置  
+```
+http://alist:alist@xxx.xxx.xxx.xxx:5678/tvbox/cat/my_cat.json
+```
