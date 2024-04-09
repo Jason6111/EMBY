@@ -27,10 +27,10 @@ myopentokenfilesize=$(cat /mnt/nvme0n1p3/docker/xiaoya/myopentoken.txt)
 myopentokenstringsize=${#myopentokenfilesize}
 if [ $myopentokenstringsize -le 279 ]; then
 	echo -e "\033[33m"
-        read -p "输入你的阿里云盘 Open Token（280位长或者335位长）: " opentoken
+        read -p "输入你的阿里云盘 Open Token（335位长）: " opentoken
 	opentoken_len=${#opentoken}
-        if [[ $opentoken_len -ne 280 ]] && [[ $opentoken_len -ne 335 ]]; then
-                echo "长度不对,阿里云盘 Open Token是280位长或者335位"
+        if [[ $opentoken_len -ne 280 ]] && [[ $opentoken_len -le 334 ]]; then
+                echo "长度不对,阿里云盘 Open Token是335位"
 		echo -e "安装停止，请参考指南配置文件\nhttps://xiaoyaliu.notion.site/xiaoya-docker-69404af849504fa5bcf9f2dd5ecaa75f \n"
 		echo -e "\033[0m"
                 exit
