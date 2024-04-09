@@ -5,9 +5,19 @@
 ```
 0 5 * * * docker restart xiaoya
 ```
+#方法1
 ```
 bash -c "$(curl https://raw.githubusercontent.com/Jason6111/EMBY/main/update_new.sh)"
 ```
+#方法2
+```
+bash -c "$(curl https://raw.githubusercontent.com/Jason6111/EMBY/main/update_new.sh)" -host
+```
+#方法3
+```
+bash -c "$(curl http://docker.xiaoya.pro/update_new.sh | sed 's#/etc/xiaoya#/mnt/nvme0n1p3/docker/xiaoya#g')" -s host
+```
+#emby安装
 ```
 bash -c "$(curl https://raw.githubusercontent.com/Jason6111/EMBY/main/emby.sh)" -s /媒体库目录  /配置目录
 ```
@@ -61,4 +71,11 @@ bash -c "$(curl http://docker.xiaoya.pro/resilio.sh)" -s /媒体库目录  /你�
 猫影视配置  
 ```
 http://alist:alist@xxx.xxx.xxx.xxx:5678/tvbox/cat/my_cat.json
+```
+#服务器
+```
+bash -c "$(curl http://docker.xiaoya.pro/update_new.sh)" -s host
+```
+```
+docker run -d -p 4567:4567 -p 5344:80 -e ALIST PORT=5344 -v /etc/xiaoya:data --restart=always --name=xiaoya-tvbox haroldli/xiaoya-tvbox:latest
 ```
