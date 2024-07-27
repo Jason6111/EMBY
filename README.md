@@ -55,7 +55,7 @@ docker run -d -p 4567:4567 -p 5344:80 -e ALIST_PORT=5344 -v /mnt/nvme0n1p3/docke
 ```
 清理
 ```
-bash -c "$(curl -s https://raw.githubusercontent.com/Jason6111/EMBY/main/aliyun_clear.sh | tail -n +2)" -s 5
+bash -c "$(curl -s https://xiaoyahelper.ddsrem.com/aliyun_clear.sh | tail -n +2)" -s 5
 ```
 24小时不间断同步和保持emby开启并同步emby config的方法，保留你自己的配置（用户，密码，播放记录。。。）
 
