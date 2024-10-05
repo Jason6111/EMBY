@@ -1,4 +1,9 @@
 ## 请勿擅自使用  
+m3u转成embyiptv
+```
+python3 m3utoxml.py
+```
+一键
 ```
 bash -c "$(curl --insecure -fsSL https://ddsrem.com/xiaoya_install.sh)"
 ```
