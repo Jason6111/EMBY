@@ -30,14 +30,6 @@ bash -c "$(curl https://raw.githubusercontent.com/Jason6111/EMBY/main/update_new
 bash -c "$(curl http://docker.xiaoya.pro/update_new.sh | sed 's#/etc/xiaoya#/mnt/nvme0n1p3/docker/xiaoya#g')" -s host
 ```
 
-# xiaoya-tvbox
-```
-docker run -d -p 4567:4567 -p 5344:80 -e ALIST_PORT=5344 -v /mnt/nvme0n1p3/docker/xiaoya:/data --restart=always --name=xiaoya-tvbox haroldli/xiaoya-tvbox:latest
-```
-清理
-```
-bash -c "$(curl -s https://xiaoyahelper.ddsrem.com/aliyun_clear.sh | tail -n +2)" -s 5
-```
 猫影视配置  
 ```
 http://alist:alist@xxx.xxx.xxx.xxx:5678/tvbox/cat/my_cat.json
@@ -51,4 +43,7 @@ bash -c "$(curl http://docker.xiaoya.pro/update_data.sh)"
 ```
 docker exec -i xiaoya /check_uc_cookie.sh update
 ```
-
+#问题  
+```
+docker exec xiaoya rm -rf /data/data/version.txt  && docker restart xiaoya
+```
