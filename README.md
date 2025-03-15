@@ -11,6 +11,10 @@ bash -c "$(curl --insecure -fsSL https://ddsrem.com/xiaoya_install.sh)"
 ```
 fuckaliyun
 ```
+TVBOX
+```
+http://xiaoya.host:5678/tvbox/my_ext_jar.json
+```
 地址1(32位token获取)：https://aliyuntoken.vercel.app/  
 地址2(280位token获取)：https://alist.nn.ci/tool/aliyundrive/request  
 地址3【重点】：转存目录的folder id  
